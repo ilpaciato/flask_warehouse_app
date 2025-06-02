@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Magazzino Elettronica</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<!-- Mostra messaggi flash -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-messages">
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+<body>
+    <h1>Magazzino Elettronica</h1>
+    <a href="{{ url_for('aggiungi') }}">
+      <button type="submit" class="btn-aggiungi">
+        Aggiungi Prodotto
+    </a>
+    <a href="{{ url_for('stato_scorte') }}">
+      <button type="submit" class="btn-stato-scorte">
+        Stato Scorte
+      </button>
+    </a>
+    
+    <table>
+        <tr>
+            <th>Nome</th>
+            <th>Categoria</th>
+            <th>Quantità</th>
+            <th>Prezzo</th>
+            <th></th>
+        </tr>
+        {% for prodotto in magazzino %}
+        <tr>
+            <td>{{ prodotto.nome }}</td>
+            <td>{{ prodotto.categoria }}</td>
+            <td>{{ prodotto.quantità }}</td>
+            <td>{{ prodotto.prezzo }} €</td>
+            <td>
+                <form action="{{ url_for('modifica', nome=prodotto.nome) }}" method="GET" style="display: inline;">
+                <button type="submit" class="btn-modifica" margin-right: 10px;">
+                  Modifica Quantità
+                </button>
+                </form>
+                
+                <form action="{{ url_for('elimina', nome=prodotto.nome) }}" method="POST" style="display: inline;">
+                <button type="submit" class="btn-elimina" 
+                    onclick="return confirm('Sei sicuro di voler eliminare {{ prodotto.nome }}?')">
+                    Elimina
+                </button>
+            </form>
+              </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

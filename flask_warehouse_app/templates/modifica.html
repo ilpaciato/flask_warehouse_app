@@ -1,0 +1,22 @@
+<!-- Mostra messaggi flash -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-messages">
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+<!-- Form per modificare la quantità -->
+<form method="POST">
+    <h2>Modifica {{ prodotto.nome }}</h2>
+    <p>Quantità attuale: {{ prodotto.quantità }}</p>
+    <input 
+    type="number" 
+    name="modifica" 
+    required
+    oninvalid="this.setCustomValidity('Inserisci un valore valido')"
+>
+    <button type="submit">Applica</button>
+</form>

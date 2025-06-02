@@ -1,0 +1,26 @@
+<!-- Mostra messaggi flash -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-messages">
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+<!-- Form per aggiungere un nuovo prodotto -->
+<form method="POST">
+    <input type="text" name="nome" placeholder="Nome" required>
+    <input type="text" name="categoria" placeholder="Categoria" required>
+    <input 
+    type="number" 
+    name="quantità" 
+    min="1" 
+    required
+    oninvalid="this.setCustomValidity('La quantità deve essere ≥ 1')"
+    oninput="this.setCustomValidity('')"
+    placeholder="Quantità" required
+>
+    <input type="number" step="0.01" name="prezzo" placeholder="Prezzo" required>
+    <button type="submit">Aggiungi</button>
+</form>
